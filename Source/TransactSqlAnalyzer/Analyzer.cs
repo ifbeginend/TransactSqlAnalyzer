@@ -60,6 +60,7 @@ namespace TransactSqlAnalyzer
                 "Analyzer",
                 true);
 
+                Console.WriteLine("Press RETURN to continue...");
                 Console.ReadLine();
                 return violationCount;
             }

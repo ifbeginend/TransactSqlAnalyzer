@@ -1,0 +1,57 @@
+﻿[
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.DeleteWithoutWhereRule, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 1,\r\n  \"IsRuleEnabled\": true,\r\n  \"FriendlyName\": \"DeleteWithoutWhere\",\r\n  \"Category\": \"Hint\",\r\n  \"Description\": \"Detects DELETE statements without WHERE clause.\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": null,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": null
+  },
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.Deprecated2016.DeprecatedFeature69_sp_addserver, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 2,\r\n  \"IsRuleEnabled\": true,\r\n  \"FriendlyName\": \"sp_addserver is deprecated\",\r\n  \"Category\": \"Deprecated\",\r\n  \"Description\": \"The stored procedure 'sp_addserver' is deprecated since SQL 2016.\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": 5,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": null
+  },
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.Deprecated2016.DeprecatedFeature70_sp_addremotelogin, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 2,\r\n  \"IsRuleEnabled\": true,\r\n  \"FriendlyName\": \"sp_addremotelogin is deprecated\",\r\n  \"Category\": \"Deprecated\",\r\n  \"Description\": \"The stored procedure sp_addremotelogin is deprecated since SQL 2016.\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": 5,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": null
+  },
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.FragmentPresenceRule, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 2,\r\n  \"IsRuleEnabled\": true,\r\n  \"FriendlyName\": \"SelectStar\",\r\n  \"Category\": \"Best practice\",\r\n  \"Description\": \"Looks for SELECT statements containing an asterisk in the select clause.\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": null,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": "{\r\n  \"$type\": \"TransactSqlAnalyzer.Rules.FragmentPresenceRuleConfig, TransactSqlAnalyzer.Rules\",\r\n  \"AffectedFragmentTypes\": {\r\n    \"$type\": \"TransactSqlAnalyzer.Rules.Common.Utils.SqlFragmentTypeList, TransactSqlAnalyzer.Rules.Common\",\r\n    \"$values\": [\r\n      \"Microsoft.SqlServer.TransactSql.ScriptDom.SelectStarExpression, Microsoft.SqlServer.TransactSql.ScriptDom, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91\"\r\n    ]\r\n  },\r\n  \"ViolationMessage\": \"SELECT clause contains *.\"\r\n}"
+  },
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.FragmentPresenceRule, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 2,\r\n  \"IsRuleEnabled\": true,\r\n  \"FriendlyName\": \"AvoidCursors\",\r\n  \"Category\": \"Performance\",\r\n  \"Description\": \"Try to achieve the goal without cursors.\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": null,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": "{\r\n  \"$type\": \"TransactSqlAnalyzer.Rules.FragmentPresenceRuleConfig, TransactSqlAnalyzer.Rules\",\r\n  \"AffectedFragmentTypes\": {\r\n    \"$type\": \"TransactSqlAnalyzer.Rules.Common.Utils.SqlFragmentTypeList, TransactSqlAnalyzer.Rules.Common\",\r\n    \"$values\": [\r\n      \"Microsoft.SqlServer.TransactSql.ScriptDom.CursorStatement, Microsoft.SqlServer.TransactSql.ScriptDom, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91\"\r\n    ]\r\n  },\r\n  \"ViolationMessage\": \"Try to achieve the goal without cursors.\"\r\n}"
+  },
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.InsertTopWithOrderByRule, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 1,\r\n  \"IsRuleEnabled\": true,\r\n  \"FriendlyName\": \"InsertTopWithOrderBy\",\r\n  \"Category\": \"Hint\",\r\n  \"Description\": \"INSERT TOP statement always picks random rows, the ORDER BY has no effect.\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": null,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": null
+  },
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.InsertWithoutColumnsRule, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 2,\r\n  \"IsRuleEnabled\": true,\r\n  \"FriendlyName\": \"InsertWithoutColumns\",\r\n  \"Category\": \"Best practice\",\r\n  \"Description\": \"Detects INSERT statementes without column specification.\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": null,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": null
+  },
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.SelectTopWithoutOrderByRule, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 2,\r\n  \"IsRuleEnabled\": true,\r\n  \"FriendlyName\": \"SelectTopWithoutOrderBy\",\r\n  \"Category\": \"Best practice\",\r\n  \"Description\": \"Detects SELECT statements with TOP clause but without ORDER BY clause.\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": null,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": null
+  },
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.SingleStatementBatchRule, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 2,\r\n  \"IsRuleEnabled\": false,\r\n  \"FriendlyName\": \"SingleStatementBatchRule\",\r\n  \"Category\": \"Best practice\",\r\n  \"Description\": \"\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": null,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": null
+  },
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.TabulatorRule, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 2,\r\n  \"IsRuleEnabled\": true,\r\n  \"FriendlyName\": \"UseSpacesNotTabs\",\r\n  \"Category\": \"Style\",\r\n  \"Description\": \"Use spaces instead of tabulators for indentation.\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": null,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": null
+  },
+  {
+    "AssemblyQualifiedRuleTypeName": "TransactSqlAnalyzer.Rules.UpdateWithoutWhereRule, TransactSqlAnalyzer.Rules, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "GeneralConfig": "{\r\n  \"Severity\": 1,\r\n  \"IsRuleEnabled\": true,\r\n  \"FriendlyName\": \"UpdateWithoutWhere\",\r\n  \"Category\": \"Hint\",\r\n  \"Description\": \"Detects UPDATE statements without WHERE clause.\",\r\n  \"SupportedSqlVersions\": {\r\n    \"MinSqlVersion\": null,\r\n    \"MaxSqlVersion\": null\r\n  }\r\n}",
+    "SpecificConfig": null
+  }
+]
