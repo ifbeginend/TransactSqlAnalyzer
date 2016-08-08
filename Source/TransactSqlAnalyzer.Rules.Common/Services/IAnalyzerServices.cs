@@ -9,6 +9,10 @@ namespace TransactSqlAnalyzer.Rules.Common.Services
 
         IReadOnlyCollection<RuleResult> EvaluateRules(string scriptText, TSqlScript script, SqlVersion sqlVersion, IEnumerable<IRule> rules);
 
+        string GetFragmentOrTokenText(TSqlScript script, RuleResult ruleResult);
+
+        string GetRuleResultSummary(TSqlScript script, RuleResult ruleResult);
+
         string GetFragmentText(TSqlFragment fragment);
 
         string GetTokenText(TSqlScript script, int firstTokenIndex, int lastTokenIndex);

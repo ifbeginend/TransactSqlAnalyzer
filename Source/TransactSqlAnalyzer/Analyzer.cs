@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using TransactSqlAnalyzer.Core;
 using TransactSqlAnalyzer.Core.Services;
-using TransactSqlAnalyzer.Rules.Common;
 using TransactSqlAnalyzer.Rules.Common.Services;
 
 namespace TransactSqlAnalyzer
@@ -27,15 +26,11 @@ namespace TransactSqlAnalyzer
             {
                 Logger.Error("The command line is not valid.");
                 Logger.Info(commandLine.HelpText);
-                Console.WriteLine("Press RETURN to continue...");
-                Console.ReadLine();
                 return -1;
             }
             else if (commandLine.DisplayHelp)
             {
                 Logger.Info(commandLine.HelpText);
-                Console.WriteLine("Press RETURN to continue...");
-                Console.ReadLine();
                 return -1;
             }
             else
@@ -60,8 +55,6 @@ namespace TransactSqlAnalyzer
                 "Analyzer",
                 true);
 
-                Console.WriteLine("Press RETURN to continue...");
-                Console.ReadLine();
                 return violationCount;
             }
         }
@@ -79,20 +72,10 @@ namespace TransactSqlAnalyzer
 
             allRuleResults.ToList().ForEach(x =>
             {
-                Console.WriteLine(
-                    $"{x.Severity} Ln {script.ScriptTokenStream[x.FirstTokenIndex].Line}, Col {script.ScriptTokenStream[x.FirstTokenIndex].Column}: " +
-                    $"{x.Rule.Configuration.FriendlyName} ({x.Rule.Configuration.Category}) {x.Message}");
+                Console.WriteLine(analyzer.GetRuleResultSummary(script, x));
                 if (verboseOutput)
                 {
-                    var resultWithFragment = x as RuleResultWithFragment;
-                    if (resultWithFragment != null)
-                    {
-                        Console.WriteLine($"{analyzer.GetFragmentText(resultWithFragment.Fragment)}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{analyzer.GetTokenText(script, x.FirstTokenIndex, x.LastTokenIndex)}");
-                    }
+                    Console.WriteLine(analyzer.GetFragmentOrTokenText(script, x));
                     Console.WriteLine();
                 }
             });

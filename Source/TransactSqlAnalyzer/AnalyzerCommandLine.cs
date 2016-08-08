@@ -15,7 +15,7 @@ namespace TransactSqlAnalyzer
         private const string InitialQuotedIdentifiersKey = "InitialQuotedIdentifiers";
         private const string SqlVersionKey = "SqlVersion";
         private const string InputFileKey = "InputFile";
-        private const string ConfigFileKey = "Config";
+        private const string ConfigFileKey = "ConfigFile";
         private const string VerboseKey = "v";
         private const string DisplayHelpKey = "?";
         private const bool mandatory = true;

@@ -32,10 +32,10 @@ namespace TransactSqlAnalyzer.CommandLine
 
             result.AppendLine("Command line syntax");
             result.AppendLine("  Options:");
-            Options.ToList().ForEach(x => result.AppendLine($"    /{x.Key}      {(x.Mandatory ? "(optional) " : "(mandatory)")}  {x.Description}"));
+            Options.ToList().ForEach(x => result.AppendLine($"    /{x.Key}      {(x.Mandatory ? "(mandatory) " : "(optional)")}  {x.Description}"));
 
             result.AppendLine("  Settings:");
-            SettingKeys.ToList().ForEach(x => result.AppendLine($"    /{x.Key} <value>  {(x.Mandatory ? "(optional) " : "(mandatory)")}  {x.Description}"));
+            SettingKeys.ToList().ForEach(x => result.AppendLine($"    /{x.Key} <value>  {(x.Mandatory ? "(mandatory) " : "(optional)")}  {x.Description}"));
             result.AppendLine();
             result.AppendLine("The options and settings are " + (IsCaseSensitive ? "case-sensitive" : "not case-sensitive") + ".");
 
