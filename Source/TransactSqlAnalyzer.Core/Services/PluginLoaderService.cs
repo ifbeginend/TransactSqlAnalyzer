@@ -14,7 +14,8 @@ namespace TransactSqlAnalyzer.Core.Services
             // do not fail if one of the plugins is flawed
             var pluginLoadResults = new List<PluginLoadResult>();
 
-            var potentialRuleAssemblyFileNames = Directory.EnumerateFiles(Directory.GetCurrentDirectory(), "*.dll", SearchOption.TopDirectoryOnly);
+            var entryAssemblyDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var potentialRuleAssemblyFileNames = Directory.EnumerateFiles(entryAssemblyDirectory, "*.dll", SearchOption.TopDirectoryOnly);
 
             foreach (var fileName in potentialRuleAssemblyFileNames)
             {

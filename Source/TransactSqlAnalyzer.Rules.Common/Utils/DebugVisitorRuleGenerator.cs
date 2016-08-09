@@ -1,4 +1,5 @@
-﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+﻿using Microsoft.CSharp;
+using Microsoft.SqlServer.TransactSql.ScriptDom;
 using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
@@ -14,17 +15,51 @@ namespace TransactSqlAnalyzer.Rules.Common.Utils
     /// </summary>
     public class DebugVisitorRuleGenerator
     {
+        public IRule CompileAndCreateDebugVisitor()
+        {
+            var sourceCode = CreateDebugVisitorSourceCode();
+
+            var provider = CSharpCodeProvider.CreateProvider("CSharp");
+
+            var compilerParameters = new CompilerParameters();
+            compilerParameters.GenerateInMemory = true;
+            compilerParameters.GenerateExecutable = false;
+            compilerParameters.CompilerOptions = "/optimize";
+            compilerParameters.IncludeDebugInformation = true;
+            compilerParameters.ReferencedAssemblies.Add("Microsoft.SqlServer.TransactSql.ScriptDom.dll");
+            compilerParameters.ReferencedAssemblies.Add("TransactSqlAnalyzer.Rules.Common.dll");
+
+            var compileResult = provider.CompileAssemblyFromSource(compilerParameters, sourceCode);
+
+            if (compileResult.Errors.HasErrors)
+            {
+                var errorMessage = new StringBuilder();
+                foreach (var error in compileResult.Errors)
+                {
+                    errorMessage.AppendLine(error.ToString());
+                }
+                throw new InvalidOperationException(errorMessage.ToString());
+            }
+
+            //var module = assembly.CompiledAssembly.GetModules()[0];
+            var debugVisitorType = compileResult.CompiledAssembly.GetType("TransactSqlAnalyzer.Rules.Common.Utils.GeneratedDebugVisitorRule");
+
+            var debugVisitorInstance = debugVisitorType.GetConstructor(Type.EmptyTypes).Invoke(null);
+            IRule debugvisitor = (IRule)debugVisitorInstance;
+            return debugvisitor;
+        }
+
         /// <summary>
         /// Creates a class source code for a visitor that visits and logs every Visit/ExplicitVisit method
         /// </summary>
         /// <returns></returns>
-        public string CreateDebugVisitor()
+        public string CreateDebugVisitorSourceCode()
         {
             // https://msdn.microsoft.com/en-us/library/ms404245(v=vs.110).aspx
             var targetCodeCompileUnit = new CodeCompileUnit();
             var targetNamespace = new CodeNamespace("TransactSqlAnalyzer.Rules.Common.Utils");
             //samples.Imports.Add(new CodeNamespaceImport("System"));
-            var targetClass = new CodeTypeDeclaration("DebugVisitorRule");
+            var targetClass = new CodeTypeDeclaration("GeneratedDebugVisitorRule");
             targetClass.IsClass = true;
             targetClass.TypeAttributes = TypeAttributes.Public;
             targetClass.BaseTypes.Add(typeof(VisitorRuleBase));
@@ -54,7 +89,8 @@ namespace TransactSqlAnalyzer.Rules.Common.Utils
 
         private CodeTypeMember CreateRuleTypeDescriptionProperty()
         {
-            var ruleTypeDescriptionProperty = new CodeSnippetTypeMember("        public override string RuleTypeDescription => \"Implements all visit methods (for debugging).\";");
+            //var ruleTypeDescriptionProperty = new CodeSnippetTypeMember("        public override string RuleTypeDescription => \"Implements all visit methods (for debugging).\";");
+            var ruleTypeDescriptionProperty = new CodeSnippetTypeMember("        public override string RuleTypeDescription { get { return \"Implements all visit methods (for debugging).\"; } }");
             return ruleTypeDescriptionProperty;
         }
 

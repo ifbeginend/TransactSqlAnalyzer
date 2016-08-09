@@ -51,6 +51,25 @@ namespace TransactSqlAnalyzer.Rules.Common.Services
             return (TSqlScript)parseResult;
         }
 
+        public string GetRuleResultSummary(TSqlScript script, RuleResult ruleResult)
+        {
+            return $"{ruleResult.Severity} {GetLineColOfFirstToken(script, ruleResult.FirstTokenIndex)}: " +
+                   $"{ruleResult.Rule.Configuration.FriendlyName} ({ruleResult.Rule.Configuration.Category}) {ruleResult.Message}";
+        }
+
+        public string GetFragmentOrTokenText(TSqlScript script, RuleResult ruleResult)
+        {
+            var resultWithFragment = ruleResult as RuleResultWithFragment;
+            if (resultWithFragment != null)
+            {
+                return $"{GetFragmentText(resultWithFragment.Fragment)}";
+            }
+            else
+            {
+                return $"{GetTokenText(script, ruleResult.FirstTokenIndex, ruleResult.LastTokenIndex)}";
+            }
+        }
+
         public string GetFragmentText(TSqlFragment fragment)
         {
             Check.NotNull(fragment, nameof(fragment));
@@ -73,6 +92,18 @@ namespace TransactSqlAnalyzer.Rules.Common.Services
                 sb.Append(script.ScriptTokenStream[i].Text);
             }
             return sb.ToString();
+        }
+
+        private static string GetLineColOfFirstToken(TSqlScript script, int firstTokenIndex)
+        {
+            if (firstTokenIndex >= 0 && firstTokenIndex <= script.ScriptTokenStream.Count)
+            {
+                return $"Ln { script.ScriptTokenStream[firstTokenIndex].Line}, Col { script.ScriptTokenStream[firstTokenIndex].Column}";
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
     }
 }
