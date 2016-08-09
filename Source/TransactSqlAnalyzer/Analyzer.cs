@@ -92,22 +92,25 @@ namespace TransactSqlAnalyzer
             var pluginLoadResults = pluginLoader.LoadPlugins();
             foreach (var pluginLoadResult in pluginLoadResults)
             {
-                Logger.Info($"  File: {pluginLoadResult.FileName}");
-                Logger.Info($"  Success: {pluginLoadResult.SuccessfullyLoaded}");
                 if (pluginLoadResult.SuccessfullyLoaded)
                 {
                     Logger.Info($"  Assembly: {pluginLoadResult.AssemblyFullName}");
-                    Logger.Info($"  Name: {pluginLoadResult.PluginServices.Information.Name}");
-                    Logger.Info($"  Description: {pluginLoadResult.PluginServices.Information.Description}");
+                    Logger.Info($"  Name: {pluginLoadResult.PluginServices.Information.Name}, Description: {pluginLoadResult.PluginServices.Information.Description}");
                     var ruleTypes = pluginLoadResult.PluginServices.GetRuleTypes();
                     Logger.Info($"  {ruleTypes.Count} Ruletypes: {string.Join(", ", ruleTypes)}");
                     registrations.RegisterRuleTypes(ruleTypes);
                 }
                 foreach (var loadMessage in pluginLoadResult.LoadMessages)
                 {
-                    Logger.Info($"    Message:{loadMessage.Severity} {loadMessage.Message}");
+                    Logger.Info($"  Message:{loadMessage.Severity} {loadMessage.Message}");
                 }
             }
+
+            if (!pluginLoadResults.Any(x => x.SuccessfullyLoaded))
+            {
+                Logger.Warn("No rule plugins found in base directory.");
+            }
+
             IocContainer.Instance.VerifyResolutions();
         }
 
